@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { BookServices } from "./book.service";
 import { bookValidationSchema } from "./book.validation";
 
+// Create a book
 const createBook = async (req: Request, res: Response) => {
   try {
     const bookData = req.body;
