@@ -8,7 +8,6 @@ export type TCategory =
   | "Religious";
 
 export type TBook = {
-  _id?: string;
   title: string;
   author: string;
   price: number;
