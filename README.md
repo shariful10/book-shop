@@ -1,5 +1,10 @@
 # Book Shop Backend
 
+## Live URL
+
+- Live URL
+  The API is deployed and can be accessed at: https://book-shop-apis.vercel.app
+
 ## Overview
 
 Book Shop Backend is a RESTful API built with Node.js, Express.js, Mongoose, and TypeScript. It provides functionalities to manage books and orders in a book shop, including creating, updating, deleting books, placing orders, and calculating total revenue from orders. The project also uses Zod for validation.
