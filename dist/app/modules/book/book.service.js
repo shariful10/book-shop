@@ -38,8 +38,18 @@ const getSingleBookFromDB = (id) => __awaiter(void 0, void 0, void 0, function* 
     }
     return book;
 });
+const updateBookIntoDB = (id, updateData) => __awaiter(void 0, void 0, void 0, function* () {
+    const updatedBook = yield book_model_1.Book.findByIdAndUpdate(id, updateData, {
+        new: true,
+    });
+    if (!updatedBook) {
+        throw new Error("Book not found");
+    }
+    return updatedBook;
+});
 exports.BookServices = {
     createBookIntoDB,
     getAllBooksFromDB,
     getSingleBookFromDB,
+    updateBookIntoDB,
 };

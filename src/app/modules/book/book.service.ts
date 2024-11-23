@@ -32,8 +32,22 @@ const getSingleBookFromDB = async (id: string): Promise<TBook | null> => {
   return book;
 };
 
+const updateBookIntoDB = async (
+  id: string,
+  updateData: Partial<TBook>,
+): Promise<TBook | null> => {
+  const updatedBook = await Book.findByIdAndUpdate(id, updateData, {
+    new: true,
+  });
+  if (!updatedBook) {
+    throw new Error("Book not found");
+  }
+  return updatedBook;
+};
+
 export const BookServices = {
   createBookIntoDB,
   getAllBooksFromDB,
   getSingleBookFromDB,
+  updateBookIntoDB,
 };

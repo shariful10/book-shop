@@ -92,7 +92,26 @@ const getSingleBook = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     catch (err) {
         res.status(404).json({
             message: err instanceof Error ? err.message : "Book not found!",
-            success: false,
+            status: false,
+            error: err,
+        });
+    }
+});
+const updateBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { productId } = req.params;
+        const updateData = req.body;
+        const result = yield book_service_1.BookServices.updateBookIntoDB(productId, updateData);
+        res.status(200).json({
+            message: "Book updated successfully",
+            status: true,
+            data: result,
+        });
+    }
+    catch (err) {
+        res.status(404).json({
+            message: err instanceof Error ? err.message : "Book not found",
+            status: false,
             error: err,
         });
     }
@@ -101,4 +120,5 @@ exports.BookController = {
     createBook,
     getAllBooks,
     getSingleBook,
+    updateBook,
 };
