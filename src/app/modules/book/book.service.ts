@@ -8,7 +8,7 @@ const createBookIntoDB = async (bookData: TBook) => {
 };
 
 // Get all books
-const getAllBooksFromDB = async (searchTerm?: string) => {
+const getAllBooksFromDB = async (searchTerm: string) => {
   const query = searchTerm
     ? {
         $or: [

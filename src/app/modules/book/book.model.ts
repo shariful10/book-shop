@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
-import { BookModel, TBook } from "./book.interface";
+import { TBook } from "./book.interface";
 
-const bookSchema = new Schema<TBook, BookModel>(
+const bookSchema = new Schema<TBook>(
   {
     title: { type: String, required: true, trim: true },
     author: { type: String, required: true, trim: true },
@@ -20,10 +20,4 @@ const bookSchema = new Schema<TBook, BookModel>(
   },
 );
 
-// Custom static method
-bookSchema.statics.isBookExists = async function (id: string) {
-  const existingBook = await this.findById(id);
-  return existingBook;
-};
-
-export const Book = model<TBook, BookModel>("Book", bookSchema);
+export const Book = model<TBook>("Book", bookSchema);
