@@ -8,4 +8,5 @@ const express_1 = __importDefault(require("express"));
 const book_controller_1 = require("./book.controller");
 const router = express_1.default.Router();
 router.post("/products", book_controller_1.BookController.createBook);
+router.get("/products", book_controller_1.BookController.getAllBooks);
 exports.BookRoutes = router;

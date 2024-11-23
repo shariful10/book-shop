@@ -8,8 +8,23 @@ const createBookIntoDB = async (bookData: TBook) => {
 };
 
 // Get all books
-const getAllBooksFromDB = async () => {
-  const result = await Book.find();
+// const getAllBooksFromDB = async () => {
+//   const result = await Book.find();
+//   return result;
+// };
+
+const getAllBooksFromDB = async (searchTerm?: string) => {
+  const query = searchTerm
+    ? {
+        $or: [
+          { title: { $regex: searchTerm, $options: "i" } },
+          { author: { $regex: searchTerm, $options: "i" } },
+          { category: { $regex: searchTerm, $options: "i" } },
+        ],
+      }
+    : {};
+
+  const result = await Book.find(query);
   return result;
 };
 

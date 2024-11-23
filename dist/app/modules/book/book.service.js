@@ -11,11 +11,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BookServices = void 0;
 const book_model_1 = require("./book.model");
-// create a book into db
+// create a book
 const createBookIntoDB = (bookData) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield book_model_1.Book.create(bookData);
     return result;
 });
+// Get all books
+// const getAllBooksFromDB = async () => {
+//   const result = await Book.find();
+//   return result;
+// };
+const getAllBooksFromDB = (searchTerm) => __awaiter(void 0, void 0, void 0, function* () {
+    const query = searchTerm
+        ? {
+            $or: [
+                { title: { $regex: searchTerm, $options: "i" } },
+                { author: { $regex: searchTerm, $options: "i" } },
+                { category: { $regex: searchTerm, $options: "i" } },
+            ],
+        }
+        : {};
+    const result = yield book_model_1.Book.find(query);
+    return result;
+});
 exports.BookServices = {
     createBookIntoDB,
+    getAllBooksFromDB,
 };

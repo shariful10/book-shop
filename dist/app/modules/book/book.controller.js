@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BookController = void 0;
+const zod_1 = require("zod");
 const book_service_1 = require("./book.service");
 const book_validation_1 = require("./book.validation");
 // Create a book
@@ -25,8 +26,54 @@ const createBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
     catch (err) {
+        if (err instanceof zod_1.ZodError) {
+            const formattedErrors = err.issues.reduce((acc, issue) => {
+                acc[issue.path[0]] = {
+                    message: issue.message,
+                    name: "ZodError",
+                    properties: {
+                        message: issue.message,
+                        type: issue.code,
+                        min: 0,
+                    },
+                    kind: issue.code,
+                    path: issue.path[0],
+                };
+                return acc;
+            }, {});
+            res.status(500).json({
+                message: "Validation failed",
+                success: false,
+                error: {
+                    name: "ZodError",
+                    errors: formattedErrors,
+                },
+                stack: err.stack,
+            });
+        }
+        else {
+            res.status(500).json({
+                message: "Something went wrong",
+                success: false,
+                error: err,
+            });
+        }
+    }
+});
+// Get all books
+const getAllBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const searchTerm = req.query.searchTerm;
+        const result = yield book_service_1.BookServices.getAllBooksFromDB(searchTerm);
+        res.status(200).json({
+            message: "Books retrieved successfully",
+            status: true,
+            data: result,
+        });
+    }
+    catch (err) {
         res.status(500).json({
-            message: "Validation failed",
+            message: "Book not found",
             success: false,
             error: err,
         });
@@ -34,4 +81,5 @@ const createBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.BookController = {
     createBook,
+    getAllBooks,
 };
