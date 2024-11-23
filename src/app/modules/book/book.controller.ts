@@ -74,6 +74,7 @@ const getAllBooks = async (req: Request, res: Response) => {
   }
 };
 
+// Get a specific book
 const getSingleBook = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
@@ -94,6 +95,7 @@ const getSingleBook = async (req: Request, res: Response) => {
   }
 };
 
+// Update a book
 const updateBook = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
@@ -115,9 +117,31 @@ const updateBook = async (req: Request, res: Response) => {
   }
 };
 
+// Delete a book
+const deleteBook = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+
+    await BookServices.deleteBookFromDB(productId);
+
+    res.status(200).json({
+      message: "Book deleted successfully",
+      status: true,
+      data: {},
+    });
+  } catch (err) {
+    res.status(404).json({
+      message: err instanceof Error ? err.message : "Book not found",
+      status: false,
+      error: err,
+    });
+  }
+};
+
 export const BookController = {
   createBook,
   getAllBooks,
   getSingleBook,
   updateBook,
+  deleteBook,
 };

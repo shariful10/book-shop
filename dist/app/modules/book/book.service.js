@@ -30,7 +30,7 @@ const getAllBooksFromDB = (searchTerm) => __awaiter(void 0, void 0, void 0, func
     const result = yield book_model_1.Book.find(query);
     return result;
 });
-// Get single book
+// Get a specific book
 const getSingleBookFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const book = yield book_model_1.Book.findById(id);
     if (!book) {
@@ -38,6 +38,7 @@ const getSingleBookFromDB = (id) => __awaiter(void 0, void 0, void 0, function* 
     }
     return book;
 });
+// Update a book
 const updateBookIntoDB = (id, updateData) => __awaiter(void 0, void 0, void 0, function* () {
     const updatedBook = yield book_model_1.Book.findByIdAndUpdate(id, updateData, {
         new: true,
@@ -47,9 +48,18 @@ const updateBookIntoDB = (id, updateData) => __awaiter(void 0, void 0, void 0, f
     }
     return updatedBook;
 });
+// Delete a book
+const deleteBookFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const deletedBook = yield book_model_1.Book.findByIdAndDelete(id);
+    if (!deletedBook) {
+        throw new Error("Book not found");
+    }
+    return deletedBook;
+});
 exports.BookServices = {
     createBookIntoDB,
     getAllBooksFromDB,
     getSingleBookFromDB,
     updateBookIntoDB,
+    deleteBookFromDB,
 };

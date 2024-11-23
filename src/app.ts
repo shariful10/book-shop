@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(cors());
 
 // Application routes
-app.use("/api", BookRoutes);
+app.use("/api/products", BookRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send(

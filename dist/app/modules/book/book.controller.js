@@ -79,6 +79,7 @@ const getAllBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
     }
 });
+// Get a specific book
 const getSingleBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { productId } = req.params;
@@ -97,6 +98,7 @@ const getSingleBook = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         });
     }
 });
+// Update a book
 const updateBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { productId } = req.params;
@@ -116,9 +118,29 @@ const updateBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
 });
+// Delete a book
+const deleteBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { productId } = req.params;
+        yield book_service_1.BookServices.deleteBookFromDB(productId);
+        res.status(200).json({
+            message: "Book deleted successfully",
+            status: true,
+            data: {},
+        });
+    }
+    catch (err) {
+        res.status(404).json({
+            message: err instanceof Error ? err.message : "Book not found",
+            status: false,
+            error: err,
+        });
+    }
+});
 exports.BookController = {
     createBook,
     getAllBooks,
     getSingleBook,
     updateBook,
+    deleteBook,
 };
