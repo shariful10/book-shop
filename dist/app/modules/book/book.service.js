@@ -17,10 +17,6 @@ const createBookIntoDB = (bookData) => __awaiter(void 0, void 0, void 0, functio
     return result;
 });
 // Get all books
-// const getAllBooksFromDB = async () => {
-//   const result = await Book.find();
-//   return result;
-// };
 const getAllBooksFromDB = (searchTerm) => __awaiter(void 0, void 0, void 0, function* () {
     const query = searchTerm
         ? {
@@ -34,7 +30,16 @@ const getAllBooksFromDB = (searchTerm) => __awaiter(void 0, void 0, void 0, func
     const result = yield book_model_1.Book.find(query);
     return result;
 });
+// Get single book
+const getSingleBookFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const book = yield book_model_1.Book.findById(id);
+    if (!book) {
+        throw new Error("Book not found");
+    }
+    return book;
+});
 exports.BookServices = {
     createBookIntoDB,
     getAllBooksFromDB,
+    getSingleBookFromDB,
 };

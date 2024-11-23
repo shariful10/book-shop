@@ -8,11 +8,6 @@ const createBookIntoDB = async (bookData: TBook) => {
 };
 
 // Get all books
-// const getAllBooksFromDB = async () => {
-//   const result = await Book.find();
-//   return result;
-// };
-
 const getAllBooksFromDB = async (searchTerm?: string) => {
   const query = searchTerm
     ? {
@@ -28,7 +23,17 @@ const getAllBooksFromDB = async (searchTerm?: string) => {
   return result;
 };
 
+// Get single book
+const getSingleBookFromDB = async (id: string): Promise<TBook | null> => {
+  const book = await Book.findById(id);
+  if (!book) {
+    throw new Error("Book not found");
+  }
+  return book;
+};
+
 export const BookServices = {
   createBookIntoDB,
   getAllBooksFromDB,
+  getSingleBookFromDB,
 };
