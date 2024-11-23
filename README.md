@@ -44,9 +44,11 @@ Book Shop Backend is a RESTful API built with Node.js, Express.js, Mongoose, and
 
 2. **Install node modules**
 
-   ```bash
-   npm install
-   ```
+- To install the necessary dependencies, run the following command:
+
+  ```bash
+  npm install
+  ```
 
 3. **Run the project**
 
