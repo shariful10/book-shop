@@ -41,3 +41,15 @@ Book Shop Backend is a RESTful API built with Node.js, Express.js, Mongoose, and
    ```bash
    git clone https://github.com/shariful10/book-shop.git
    ```
+
+2. **Install node modules**
+
+   ```bash
+   npm install
+   ```
+
+3. **Run the project**
+
+   ```bash
+   npm run start:dev
+   ```
