@@ -7,8 +7,10 @@ import { bookValidationSchema } from "./book.validation";
 // Create a book
 const createBook = async (req: Request, res: Response) => {
   try {
+    // Extract book data
     const bookData = req.body;
 
+    // Validate the book data using Zod
     const zodParseData = bookValidationSchema.parse(bookData);
 
     const result = await BookServices.createBookIntoDB(zodParseData);
@@ -57,7 +59,10 @@ const createBook = async (req: Request, res: Response) => {
 // Get all books
 const getAllBooks = async (req: Request, res: Response) => {
   try {
+    // Extract search term from query parameters
     const searchTerm = req.query.searchTerm as string;
+
+    // Retrieve books from the database
     const result = await BookServices.getAllBooksFromDB(searchTerm);
 
     res.status(200).json({
@@ -77,8 +82,10 @@ const getAllBooks = async (req: Request, res: Response) => {
 // Get a specific book
 const getSingleBook = async (req: Request, res: Response) => {
   try {
+    // Extract productId
     const { productId } = req.params;
 
+    // Retrieve the book from the database using the productId
     const result = await BookServices.getSingleBookFromDB(productId);
 
     res.status(200).json({
@@ -98,9 +105,13 @@ const getSingleBook = async (req: Request, res: Response) => {
 // Update a book
 const updateBook = async (req: Request, res: Response) => {
   try {
+    // Extract productId
     const { productId } = req.params;
+
+    // Extract update data
     const updateData = req.body;
 
+    // Update the book in the database using the productId and update data
     const result = await BookServices.updateBookIntoDB(productId, updateData);
 
     res.status(200).json({
@@ -120,8 +131,10 @@ const updateBook = async (req: Request, res: Response) => {
 // Delete a book
 const deleteBook = async (req: Request, res: Response) => {
   try {
+    // Extract productId
     const { productId } = req.params;
 
+    // Delete the book from the database using the productId
     await BookServices.deleteBookFromDB(productId);
 
     res.status(200).json({

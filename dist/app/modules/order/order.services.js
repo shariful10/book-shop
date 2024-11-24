@@ -14,23 +14,32 @@ const book_model_1 = require("../book/book.model");
 const order_model_1 = require("./order.model");
 // Create order and update stock & quantity
 const createOrderIntoDB = (orderData) => __awaiter(void 0, void 0, void 0, function* () {
+    // Find the book by ID within the session
     const session = yield order_model_1.Order.startSession();
     session.startTransaction();
     try {
+        // Find the book by ID within the session
         const book = yield book_model_1.Book.findById(orderData.product).session(session);
+        // Find the book exists or not
         if (!book) {
             throw new Error("Book not found");
         }
+        // Check the book is in stock or not
         if (book.quantity < orderData.quantity) {
             throw new Error("Insufficient stock");
         }
+        // Update the stock and quantity
         book.quantity -= orderData.quantity;
         if (book.quantity === 0) {
             book.inStock = false;
         }
+        // Save the updated book within the session
         yield book.save({ session });
+        // Create a new order with the provided data
         const order = new order_model_1.Order(orderData);
+        // Save the order within the session
         const result = yield order.save({ session });
+        // Commit the transaction
         yield session.commitTransaction();
         session.endSession();
         return result;
@@ -46,6 +55,7 @@ const calculateTotalRevenue = () => __awaiter(void 0, void 0, void 0, function* 
     var _a;
     const result = yield order_model_1.Order.aggregate([
         {
+            // Lookup to join orders with books collection
             $lookup: {
                 from: "books",
                 localField: "product",
@@ -54,12 +64,15 @@ const calculateTotalRevenue = () => __awaiter(void 0, void 0, void 0, function* 
             },
         },
         {
+            // Unwind the bookDetails array to deconstruct the array field
             $unwind: "$bookDetails",
         },
         {
+            // Group by null to calculate the total revenue
             $group: {
                 _id: null,
                 totalRevenue: {
+                    // Sum the product of book price and quantity ordered
                     $sum: {
                         $multiply: ["$bookDetails.price", "$quantity"],
                     },
@@ -67,6 +80,7 @@ const calculateTotalRevenue = () => __awaiter(void 0, void 0, void 0, function* 
             },
         },
     ]);
+    // Return the total revenue or 0
     return ((_a = result[0]) === null || _a === void 0 ? void 0 : _a.totalRevenue) || 0;
 });
 exports.OrderServices = {

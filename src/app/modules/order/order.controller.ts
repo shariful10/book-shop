@@ -6,10 +6,13 @@ import { orderValidationSchema } from "./order.validation";
 
 const createOrder = async (req: Request, res: Response) => {
   try {
+    // Extract order data
     const orderData = req.body;
 
+    // Validate the order data using Zod
     const zodParseData = orderValidationSchema.parse(orderData);
 
+    // Create a new order in the database
     const result = await OrderServices.createOrderIntoDB(zodParseData);
 
     res.status(200).json({
@@ -61,6 +64,7 @@ const createOrder = async (req: Request, res: Response) => {
 
 const calculateRevenue = async (req: Request, res: Response) => {
   try {
+    // Calculate the total revenue from all orders
     const totalRevenue = await OrderServices.calculateTotalRevenue();
 
     res.status(200).json({

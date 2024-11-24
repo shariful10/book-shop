@@ -18,21 +18,25 @@ const createBookIntoDB = (bookData) => __awaiter(void 0, void 0, void 0, functio
 });
 // Get all books
 const getAllBooksFromDB = (searchTerm) => __awaiter(void 0, void 0, void 0, function* () {
+    // Construct the query based on the search term
     const query = searchTerm
         ? {
             $or: [
+                // Search by title, author, or category
                 { title: { $regex: searchTerm, $options: "i" } },
                 { author: { $regex: searchTerm, $options: "i" } },
                 { category: { $regex: searchTerm, $options: "i" } },
             ],
         }
         : {};
+    // Execute the query to find matching books
     const result = yield book_model_1.Book.find(query);
     return result;
 });
 // Get a specific book
 const getSingleBookFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const book = yield book_model_1.Book.findById(id);
+    // Check the book is exists or not
     if (!book) {
         throw new Error("Book not found");
     }
@@ -43,6 +47,7 @@ const updateBookIntoDB = (id, updateData) => __awaiter(void 0, void 0, void 0, f
     const updatedBook = yield book_model_1.Book.findByIdAndUpdate(id, updateData, {
         new: true,
     });
+    // Check the book is exists or not
     if (!updatedBook) {
         throw new Error("Book not found");
     }
@@ -51,6 +56,7 @@ const updateBookIntoDB = (id, updateData) => __awaiter(void 0, void 0, void 0, f
 // Delete a book
 const deleteBookFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const deletedBook = yield book_model_1.Book.findByIdAndDelete(id);
+    // Check the book is exists or not
     if (!deletedBook) {
         throw new Error("Book not found");
     }

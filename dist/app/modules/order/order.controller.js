@@ -15,8 +15,11 @@ const order_services_1 = require("./order.services");
 const order_validation_1 = require("./order.validation");
 const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        // Extract order data
         const orderData = req.body;
+        // Validate the order data using Zod
         const zodParseData = order_validation_1.orderValidationSchema.parse(orderData);
+        // Create a new order in the database
         const result = yield order_services_1.OrderServices.createOrderIntoDB(zodParseData);
         res.status(200).json({
             message: "Order created successfully",
@@ -68,6 +71,7 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 const calculateRevenue = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        // Calculate the total revenue from all orders
         const totalRevenue = yield order_services_1.OrderServices.calculateTotalRevenue();
         res.status(200).json({
             message: "Revenue calculated successfully",

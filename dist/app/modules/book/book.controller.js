@@ -16,7 +16,9 @@ const book_validation_1 = require("./book.validation");
 // Create a book
 const createBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        // Extract book data
         const bookData = req.body;
+        // Validate the book data using Zod
         const zodParseData = book_validation_1.bookValidationSchema.parse(bookData);
         const result = yield book_service_1.BookServices.createBookIntoDB(zodParseData);
         res.status(200).json({
@@ -63,7 +65,9 @@ const createBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 // Get all books
 const getAllBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        // Extract search term from query parameters
         const searchTerm = req.query.searchTerm;
+        // Retrieve books from the database
         const result = yield book_service_1.BookServices.getAllBooksFromDB(searchTerm);
         res.status(200).json({
             message: "Books retrieved successfully",
@@ -82,7 +86,9 @@ const getAllBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 // Get a specific book
 const getSingleBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        // Extract productId
         const { productId } = req.params;
+        // Retrieve the book from the database using the productId
         const result = yield book_service_1.BookServices.getSingleBookFromDB(productId);
         res.status(200).json({
             message: "Book retrieved successfully",
@@ -101,8 +107,11 @@ const getSingleBook = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 // Update a book
 const updateBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        // Extract productId
         const { productId } = req.params;
+        // Extract update data
         const updateData = req.body;
+        // Update the book in the database using the productId and update data
         const result = yield book_service_1.BookServices.updateBookIntoDB(productId, updateData);
         res.status(200).json({
             message: "Book updated successfully",
@@ -121,7 +130,9 @@ const updateBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 // Delete a book
 const deleteBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        // Extract productId
         const { productId } = req.params;
+        // Delete the book from the database using the productId
         yield book_service_1.BookServices.deleteBookFromDB(productId);
         res.status(200).json({
             message: "Book deleted successfully",
