@@ -76,7 +76,7 @@ const calculateRevenue = async (req: Request, res: Response) => {
     });
   } catch (err) {
     res.status(500).json({
-      message: "Something went wrong",
+      message: "Order not found",
       success: false,
       error: err,
     });

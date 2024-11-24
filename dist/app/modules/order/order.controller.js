@@ -83,7 +83,7 @@ const calculateRevenue = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
     catch (err) {
         res.status(500).json({
-            message: "Something went wrong",
+            message: "Order not found",
             success: false,
             error: err,
         });
