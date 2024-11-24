@@ -1,5 +1,3 @@
-// import { Model } from "mongoose";
-
 export type TCategory =
   | "Fiction"
   | "Science"
@@ -16,7 +14,3 @@ export type TBook = {
   quantity: number;
   inStock: boolean;
 };
-
-// export interface BookModel extends Model<TBook> {
-//   isBookExists(id: string): Promise<TBook | null>;
-// }
