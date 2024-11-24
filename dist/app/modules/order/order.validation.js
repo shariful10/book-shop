@@ -3,16 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.orderValidationSchema = void 0;
 const mongoose_1 = require("mongoose");
 const zod_1 = require("zod");
-// const objectIdSchema = z
-//   .string()
-//   .regex(/^[a-f\d]{24}$/i, "Invalid ObjectId")
-//   .transform((val) => new Types.ObjectId(val));
-// const isObjectId = (value: unknown): value is Types.ObjectId => {
-//   return Types.ObjectId.isValid(value as Types.ObjectId);
-// };
-// const objectIdSchema = z.custom<Types.ObjectId>(isObjectId, {
-//   message: "Invalid ObjectId",
-// });
 exports.orderValidationSchema = zod_1.z.object({
     email: zod_1.z
         .string({
