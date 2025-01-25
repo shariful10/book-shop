@@ -1,8 +1,6 @@
 import cors from "cors";
 import express, { Application, Request, Response } from "express";
-import { BookRoutes } from "./app/modules/book/book.route";
-import { OrderRoutes } from "./app/modules/order/order.route";
-import { UserRoutes } from "./app/modules/user/user.route";
+import router from "./app/routes";
 import globalErrorHandler from "./middlewares/globalErrorHandler";
 import notFound from "./middlewares/notFound";
 const app: Application = express();
@@ -10,11 +8,10 @@ const app: Application = express();
 // Parsers
 app.use(express.json());
 app.use(cors());
+app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
 
 // Application routes
-app.use("/api/products", BookRoutes);
-app.use("/api/orders", OrderRoutes);
-app.use("/api/users", UserRoutes);
+app.use("/api", router);
 
 app.get("/", (req: Request, res: Response) => {
   res.send(

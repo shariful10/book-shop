@@ -5,7 +5,7 @@ export const createToken = (
   secret: string,
 ) => {
   return jwt.sign(jwtPayload, secret, {
-    expiresIn: "10h",
+    expiresIn: "20h",
   });
 };
 
