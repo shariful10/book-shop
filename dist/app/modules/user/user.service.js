@@ -12,20 +12,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
-const app_1 = __importDefault(require("./app"));
-const config_1 = __importDefault(require("./app/config"));
-const DB_1 = __importDefault(require("./app/DB"));
-const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield mongoose_1.default.connect(config_1.default.databaseUrl);
-        (0, DB_1.default)();
-        app_1.default.listen(config_1.default.port, () => {
-            console.log(`App is listening on port: ${config_1.default.port}`);
-        });
-    }
-    catch (err) {
-        console.log(err);
-    }
+exports.UserServices = void 0;
+const config_1 = __importDefault(require("../../config"));
+const user_model_1 = require("./user.model");
+const user_utils_1 = require("./user.utils");
+const createUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield user_model_1.User.create(payload);
+    const jwtPayload = {
+        email: payload.email,
+        role: payload.role,
+    };
+    const accessToken = (0, user_utils_1.createToken)(jwtPayload, config_1.default.jwtAccessSecret);
+    const refreshToken = (0, user_utils_1.createToken)(jwtPayload, config_1.default.jwtRefreshSecret);
+    return {
+        user,
+        accessToken,
+        refreshToken,
+    };
 });
-main();
+exports.UserServices = {
+    createUserIntoDB,
+};
