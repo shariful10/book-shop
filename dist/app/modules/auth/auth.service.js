@@ -31,8 +31,8 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         email: user.email,
         role: user.role,
     };
-    const accessToken = (0, user_utils_1.createToken)(jwtPayload, config_1.default.jwtAccessSecret);
-    const refreshToken = (0, user_utils_1.createToken)(jwtPayload, config_1.default.jwtRefreshSecret);
+    const accessToken = (0, user_utils_1.createToken)(jwtPayload, config_1.default.jwtAccessSecret, { expiresIn: "10s" });
+    const refreshToken = (0, user_utils_1.createToken)(jwtPayload, config_1.default.jwtRefreshSecret, { expiresIn: "30d" });
     return {
         accessToken,
         refreshToken,
